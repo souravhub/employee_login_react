@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Header, Footer, Home } from './components';
 
 import './App.css';
 
@@ -7,7 +8,9 @@ function App() {
 
 	return (
 		<>
-			<h1 className="text-3xl text-blue-800">Employee Login React</h1>
+			{/* <Header /> */}
+			<Home />
+			<Footer />
 		</>
 	);
 }
