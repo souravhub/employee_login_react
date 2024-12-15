@@ -2,6 +2,9 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Home from './Home/Home';
 import About from './About/About';
-import Login from './Login/Login';
+import Login from './Auth/Login';
+import SignUp from './Auth/SignUp';
+import Input from './Form Elements/Input';
+import Button from './Form Elements/Button';
 
-export { Header, Footer, Home, About, Login };
+export { Header, Footer, Home, About, Login, SignUp, Input, Button };
