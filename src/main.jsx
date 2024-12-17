@@ -5,6 +5,8 @@ import App from './App.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout.jsx';
 import { About, Home, Login, SignUp } from './components/index.js';
+import { Provider } from 'react-redux';
+import store from './store/store.js';
 
 const router = createBrowserRouter([
 	{
@@ -33,6 +35,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<Provider store={store}>
+			<RouterProvider router={router} />
+		</Provider>
 	</StrictMode>
 );

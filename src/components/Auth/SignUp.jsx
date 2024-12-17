@@ -1,8 +1,12 @@
-import React from 'react';
-import { Input, Button } from '../index';
+import React, { useEffect } from 'react';
+import { Input, Button, SelectInput } from '../index';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import conf from '../../conf/conf.js';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -10,10 +14,41 @@ function SignUp() {
 		formState: { errors, isSubmitting },
 	} = useForm();
 
+	const password = watch('password');
+
 	const submit = async function (data) {
-		await new Promise((resolve) => setTimeout(resolve, 5000));
-		console.log('submitting form', data);
+		// await new Promise((resolve) => setTimeout(resolve, 5000));
+
+		const {
+			firstName,
+			lastName,
+			email,
+			userName,
+			userType,
+			password,
+			jobProfile,
+			confirmPassword,
+		} = data;
+
+		const apiBody = {
+			name: { firstName, lastName },
+			email,
+			userName,
+			userType,
+			password,
+			jobProfile,
+		};
+
+		const res = await axios.post(
+			`${conf.apiBaseUrl}/api/v1/users/register`,
+			apiBody
+		);
+		console.log(res, 'res');
+		navigate('/login');
 	};
+	useEffect(() => {
+		console.log(import.meta.env.VITE_API_BASE_URL, 'VITE_API_BASE_URL');
+	}, []);
 	return (
 		<>
 			<p className="text-3xl font-bold my-3">Welcome to Login Portal</p>
@@ -23,11 +58,11 @@ function SignUp() {
 					className="flex flex-wrap"
 				>
 					<Input
-						label="First Name :"
+						label="First Name"
 						placeholder="Enter Your First Name"
-						className="mb-4"
+						className={`${errors.firstName ? 'mb-1' : 'mb-4'}`}
 						{...register('firstName', {
-							required: true,
+							required: 'First name is required',
 							minLength: {
 								value: 3,
 								message:
@@ -36,28 +71,125 @@ function SignUp() {
 						})}
 					/>
 					{errors.firstName && (
-						<p className="text-red-600">
+						<p className="text-red-600 mb-4">
 							{errors.firstName.message}
 						</p>
 					)}
 					<Input
-						label="First Name :"
+						label="First Name"
 						placeholder="Enter Your Last Name"
-						className="mb-4"
-						{...register('lastName', { required: true })}
+						className={`${errors.lastName ? 'mb-1' : 'mb-4'}`}
+						{...register('lastName', {
+							required: 'Last name is required',
+						})}
 					/>
+					{errors.lastName && (
+						<p className="text-red-600 mb-4">
+							{errors.lastName.message}
+						</p>
+					)}
 					<Input
-						label="User Name :"
+						label="Email"
+						placeholder="Enter Your email address"
+						className={`${errors.email ? 'mb-1' : 'mb-4'}`}
+						{...register('email', {
+							required: 'Email is required',
+							pattern: {
+								value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+								message: 'Invalid email format',
+							},
+						})}
+					/>
+					{errors.email && (
+						<p className="text-red-600 mb-4">
+							{errors.email.message}
+						</p>
+					)}
+					<Input
+						label="User Name"
 						placeholder="Enter User Name"
-						className="mb-4"
-						{...register('userName', { required: true })}
+						className={`${errors.userName ? 'mb-1' : 'mb-4'}`}
+						{...register('userName', {
+							required: 'User name is required',
+						})}
 					/>
+					{errors.userName && (
+						<p className="text-red-600 mb-4">
+							{errors.userName.message}
+						</p>
+					)}
+					<SelectInput
+						options={[
+							{ text: 'User', value: 'user' },
+							{ text: 'Admin', value: 'admin' },
+						]}
+						labelKey="text"
+						valueKey="value"
+						label="User Type"
+						className={`${errors.userType ? 'mb-1' : 'mb-4'}`}
+						{...register('userType', {
+							required: 'User type is required',
+						})}
+					/>
+					{errors.userType && (
+						<p className="text-red-600 mb-4">
+							{errors.userType.message}
+						</p>
+					)}
+					<SelectInput
+						options={[
+							'Frontend Developer',
+							'Backend Developer',
+							'Architect',
+							'UX Designer',
+							'Project Manager',
+						]}
+						label="Job Profile"
+						className={`${errors.jobProfile ? 'mb-1' : 'mb-4'}`}
+						{...register('jobProfile', {
+							required: 'Job profile is required',
+						})}
+					/>
+					{errors.jobProfile && (
+						<p className="text-red-600">
+							{errors.jobProfile.message}
+						</p>
+					)}
 					<Input
-						label="Password :"
+						label="Password"
 						placeholder="Enter Password"
-						className="mb-4"
-						{...register('password', { required: true })}
+						className={`${errors.password ? 'mb-1' : 'mb-4'}`}
+						{...register('password', {
+							required: 'Password is required',
+							minLength: {
+								value: 6,
+								message:
+									'Password must be at least 6 characters',
+							},
+						})}
 					/>
+					{errors.password && (
+						<p className="text-red-600 mb-4">
+							{errors.password.message}
+						</p>
+					)}
+					<Input
+						label="Confirm Password"
+						placeholder="Confirm Password"
+						className={`${
+							errors.confirmPassword ? 'mb-1' : 'mb-4'
+						}`}
+						{...register('confirmPassword', {
+							required: 'Confirm Password is required',
+							validate: (value) =>
+								value === password || 'Passwords do not match',
+						})}
+					/>
+					{errors.confirmPassword && (
+						<p className="text-red-600 mb-4">
+							{errors.confirmPassword.message}
+						</p>
+					)}
 					<Button
 						type="submit"
 						bgColor={'bg-blue-500'}
