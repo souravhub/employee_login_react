@@ -7,6 +7,7 @@ import SignUp from './Auth/SignUp';
 import Input from './Form Elements/Input';
 import Button from './Form Elements/Button';
 import SelectInput from './Form Elements/SelectInput';
+import ProtectedRoute from './ProtectedRoute';
 
 export {
 	Header,
@@ -18,4 +19,5 @@ export {
 	Input,
 	Button,
 	SelectInput,
+	ProtectedRoute,
 };

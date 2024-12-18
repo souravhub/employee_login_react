@@ -4,7 +4,13 @@ import './index.css';
 import App from './App.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout.jsx';
-import { About, Home, Login, SignUp } from './components/index.js';
+import {
+	About,
+	Home,
+	Login,
+	SignUp,
+	ProtectedRoute,
+} from './components/index.js';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
 
@@ -15,19 +21,35 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: '',
-				element: <Home />,
+				element: (
+					<ProtectedRoute>
+						<Home />
+					</ProtectedRoute>
+				),
 			},
 			{
 				path: '/about',
-				element: <About />,
+				element: (
+					<ProtectedRoute>
+						<About />
+					</ProtectedRoute>
+				),
 			},
 			{
 				path: '/login',
-				element: <Login />,
+				element: (
+					<ProtectedRoute>
+						<Login />
+					</ProtectedRoute>
+				),
 			},
 			{
 				path: '/signup',
-				element: <SignUp />,
+				element: (
+					<ProtectedRoute>
+						<SignUp />
+					</ProtectedRoute>
+				),
 			},
 		],
 	},

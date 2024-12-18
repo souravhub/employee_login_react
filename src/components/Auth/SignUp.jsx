@@ -46,9 +46,6 @@ function SignUp() {
 		console.log(res, 'res');
 		navigate('/login');
 	};
-	useEffect(() => {
-		console.log(import.meta.env.VITE_API_BASE_URL, 'VITE_API_BASE_URL');
-	}, []);
 	return (
 		<>
 			<p className="text-3xl font-bold my-3">Welcome to Login Portal</p>
