@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout.jsx';
-import { ProtectedRoute } from './components/index.js';
+import { ProtectedRoute, AuthGuard } from './components/index.js';
 import Login from './pages/Login.jsx';
 import SignUp from './pages/SignUp.jsx';
 import Home from './pages/Home.jsx';
@@ -36,17 +36,18 @@ const router = createBrowserRouter([
 			{
 				path: '/login',
 				element: (
-					<ProtectedRoute>
+					<AuthGuard>
+						{' '}
 						<Login />
-					</ProtectedRoute>
+					</AuthGuard>
 				),
 			},
 			{
 				path: '/signup',
 				element: (
-					<ProtectedRoute>
+					<AuthGuard>
 						<SignUp />
-					</ProtectedRoute>
+					</AuthGuard>
 				),
 			},
 		],

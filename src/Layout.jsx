@@ -6,7 +6,9 @@ function Layout() {
 	return (
 		<>
 			<Header />
-			<Outlet />
+			<div className="mx-16 p-2">
+				<Outlet />
+			</div>
 			<Footer />
 		</>
 	);

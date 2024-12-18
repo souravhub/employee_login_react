@@ -6,6 +6,7 @@ import Input from './Form Elements/Input';
 import Button from './Form Elements/Button';
 import SelectInput from './Form Elements/SelectInput';
 import ProtectedRoute from './ProtectedRoute';
+import AuthGuard from './AuthGuard';
 
 export {
 	Header,
@@ -16,4 +17,5 @@ export {
 	Button,
 	SelectInput,
 	ProtectedRoute,
+	AuthGuard,
 };
