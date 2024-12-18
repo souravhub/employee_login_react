@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { Input, Button } from '../index';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import conf from '../../conf/conf.js';
+import axiosInstance from '../../axiosConfig.js';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login as authLogin } from '../../store/authSlice.js';
@@ -26,10 +25,7 @@ function Login() {
 			password,
 		};
 
-		const res = await axios.post(
-			`${conf.apiBaseUrl}/api/v1/users/login`,
-			apiBody
-		);
+		const res = await axiosInstance.post(`/api/v1/users/login`, apiBody);
 		console.log(res, 'login response');
 		const { accessToken, refreshToken, user } = res.data.data;
 		const userData = {

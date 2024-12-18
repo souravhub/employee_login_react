@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { Input, Button, SelectInput } from '../index';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import conf from '../../conf/conf.js';
+import axiosInstance from '../../axiosConfig.js';
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
@@ -39,10 +38,7 @@ function SignUp() {
 			jobProfile,
 		};
 
-		const res = await axios.post(
-			`${conf.apiBaseUrl}/api/v1/users/register`,
-			apiBody
-		);
+		const res = await axiosInstance.post(`/api/v1/users/register`, apiBody);
 		console.log(res, 'res');
 		navigate('/login');
 	};
