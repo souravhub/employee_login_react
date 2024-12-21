@@ -5,6 +5,7 @@ import axiosInstance from '../../axiosConfig.js';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login as authLogin } from '../../store/authSlice.js';
+import { Loader2 } from 'lucide-react';
 
 function Login() {
 	const navigate = useNavigate();
@@ -76,7 +77,11 @@ function Login() {
 						className="w-full"
 						disabled={isSubmitting}
 					>
-						{isSubmitting ? 'Loading...' : 'Sign In'}
+						{isSubmitting ? (
+							<Loader2 className="animate-spin" />
+						) : (
+							'Sign In'
+						)}
 					</Button>
 				</form>
 			</div>

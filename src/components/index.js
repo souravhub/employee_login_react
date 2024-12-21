@@ -7,6 +7,8 @@ import { Button, buttonVariants } from './ui/button';
 import SelectInput from './Form Elements/SelectInput';
 import ProtectedRoute from './ProtectedRoute';
 import AuthGuard from './AuthGuard';
+import ProfileOptions from './ProfileOptions';
+import ConfirmDialog from './ConfirmDialog';
 
 export {
 	Header,
@@ -19,4 +21,6 @@ export {
 	SelectInput,
 	ProtectedRoute,
 	AuthGuard,
+	ProfileOptions,
+	ConfirmDialog,
 };
