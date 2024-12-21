@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 function Home() {
 	return (
-		<div>
+		<div className="h-screen">
 			<Button>Test it</Button>
 		</div>
 	);

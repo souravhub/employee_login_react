@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Input, Button, SelectInput } from '../index';
+import { Input, SelectInput, Button } from '../index';
 import { useForm } from 'react-hook-form';
 import axiosInstance from '../../axiosConfig.js';
 import { useNavigate } from 'react-router-dom';
@@ -53,7 +53,9 @@ function SignUp() {
 					<Input
 						label="First Name"
 						placeholder="Enter Your First Name"
-						className={`${errors.firstName ? 'mb-1' : 'mb-4'}`}
+						invalid={errors.firstName}
+						invalidMsg={errors?.firstName?.message || ''}
+						className="mb-4"
 						{...register('firstName', {
 							required: 'First name is required',
 							minLength: {
@@ -63,28 +65,22 @@ function SignUp() {
 							},
 						})}
 					/>
-					{errors.firstName && (
-						<p className="text-red-600 mb-4">
-							{errors.firstName.message}
-						</p>
-					)}
 					<Input
 						label="First Name"
 						placeholder="Enter Your Last Name"
-						className={`${errors.lastName ? 'mb-1' : 'mb-4'}`}
+						invalid={errors.lastName}
+						invalidMsg={errors?.lastName?.message || ''}
+						className="mb-4"
 						{...register('lastName', {
 							required: 'Last name is required',
 						})}
 					/>
-					{errors.lastName && (
-						<p className="text-red-600 mb-4">
-							{errors.lastName.message}
-						</p>
-					)}
 					<Input
 						label="Email"
 						placeholder="Enter Your email address"
-						className={`${errors.email ? 'mb-1' : 'mb-4'}`}
+						invalid={errors.email}
+						invalidMsg={errors?.email?.message || ''}
+						className="mb-4"
 						{...register('email', {
 							required: 'Email is required',
 							pattern: {
@@ -93,24 +89,16 @@ function SignUp() {
 							},
 						})}
 					/>
-					{errors.email && (
-						<p className="text-red-600 mb-4">
-							{errors.email.message}
-						</p>
-					)}
 					<Input
 						label="User Name"
 						placeholder="Enter User Name"
-						className={`${errors.userName ? 'mb-1' : 'mb-4'}`}
+						invalid={errors.userName}
+						invalidMsg={errors?.userName?.message || ''}
+						className="mb-4"
 						{...register('userName', {
 							required: 'User name is required',
 						})}
 					/>
-					{errors.userName && (
-						<p className="text-red-600 mb-4">
-							{errors.userName.message}
-						</p>
-					)}
 					<SelectInput
 						options={[
 							{ text: 'User', value: 'user' },
@@ -119,16 +107,13 @@ function SignUp() {
 						labelKey="text"
 						valueKey="value"
 						label="User Type"
-						className={`${errors.userType ? 'mb-1' : 'mb-4'}`}
+						invalid={errors.userType}
+						invalidMsg={errors?.userType?.message || ''}
+						className="mb-4"
 						{...register('userType', {
 							required: 'User type is required',
 						})}
 					/>
-					{errors.userType && (
-						<p className="text-red-600 mb-4">
-							{errors.userType.message}
-						</p>
-					)}
 					<SelectInput
 						options={[
 							'Frontend Developer',
@@ -138,20 +123,19 @@ function SignUp() {
 							'Project Manager',
 						]}
 						label="Job Profile"
-						className={`${errors.jobProfile ? 'mb-1' : 'mb-4'}`}
+						invalid={errors.jobProfile}
+						invalidMsg={errors?.jobProfile?.message || ''}
+						className="mb-4"
 						{...register('jobProfile', {
 							required: 'Job profile is required',
 						})}
 					/>
-					{errors.jobProfile && (
-						<p className="text-red-600">
-							{errors.jobProfile.message}
-						</p>
-					)}
 					<Input
 						label="Password"
 						placeholder="Enter Password"
-						className={`${errors.password ? 'mb-1' : 'mb-4'}`}
+						invalid={errors.password}
+						invalidMsg={errors?.password?.message || ''}
+						className="mb-4"
 						{...register('password', {
 							required: 'Password is required',
 							minLength: {
@@ -161,31 +145,20 @@ function SignUp() {
 							},
 						})}
 					/>
-					{errors.password && (
-						<p className="text-red-600 mb-4">
-							{errors.password.message}
-						</p>
-					)}
 					<Input
 						label="Confirm Password"
 						placeholder="Confirm Password"
-						className={`${
-							errors.confirmPassword ? 'mb-1' : 'mb-4'
-						}`}
+						invalid={errors.confirmPassword}
+						invalidMsg={errors?.confirmPassword?.message || ''}
+						className="mb-4"
 						{...register('confirmPassword', {
 							required: 'Confirm Password is required',
 							validate: (value) =>
 								value === password || 'Passwords do not match',
 						})}
 					/>
-					{errors.confirmPassword && (
-						<p className="text-red-600 mb-4">
-							{errors.confirmPassword.message}
-						</p>
-					)}
 					<Button
 						type="submit"
-						bgColor={'bg-blue-500'}
 						className="w-full"
 						disabled={isSubmitting}
 					>

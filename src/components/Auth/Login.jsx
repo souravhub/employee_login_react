@@ -26,7 +26,6 @@ function Login() {
 		};
 
 		const res = await axiosInstance.post(`/api/v1/users/login`, apiBody);
-		console.log(res, 'login response');
 		const { accessToken, refreshToken, user } = res.data.data;
 		const userData = {
 			...user,
@@ -49,21 +48,20 @@ function Login() {
 						type="text"
 						label="Email or User Name"
 						placeholder="Enter Your email address or user name"
-						className={`${errors.email ? 'mb-1' : 'mb-4'}`}
+						invalid={errors.email}
+						invalidMsg={errors?.email?.message || ''}
+						className="mb-4"
 						{...register('email', {
 							required: 'Email or username is required',
 						})}
 					/>
-					{errors.email && (
-						<p className="text-red-600 mb-4">
-							{errors.email.message}
-						</p>
-					)}
 					<Input
 						label="Password"
 						type="password"
 						placeholder="Enter Password"
-						className={`${errors.password ? 'mb-1' : 'mb-4'}`}
+						invalid={errors.password}
+						invalidMsg={errors?.password?.message || ''}
+						className="mb-4"
 						{...register('password', {
 							required: 'Password is required',
 							minLength: {
@@ -73,14 +71,8 @@ function Login() {
 							},
 						})}
 					/>
-					{errors.password && (
-						<p className="text-red-600 mb-4">
-							{errors.password.message}
-						</p>
-					)}
 					<Button
 						type="submit"
-						bgColor={'bg-blue-500'}
 						className="w-full"
 						disabled={isSubmitting}
 					>
