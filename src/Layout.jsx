@@ -1,17 +1,17 @@
-import React from 'react';
-import { Footer, Header } from './components';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import { Footer, Header } from "./components";
+import { Outlet } from "react-router-dom";
 
 function Layout() {
-	return (
-		<>
-			<Header />
-			<div className="px-20 p-2 bg-amber-50">
-				<Outlet />
-			</div>
-			<Footer />
-		</>
-	);
+    return (
+        <>
+            <Header />
+            <div className="px-32 p-2 bg-amber-50">
+                <Outlet />
+            </div>
+            <Footer />
+        </>
+    );
 }
 
 export default Layout;
