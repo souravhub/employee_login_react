@@ -19,11 +19,15 @@ function ProfileOptions() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const userData = useSelector((state) => state.auth.userData);
+    const [profileImgUrl, setProfileImgUrl] = useState(
+        "../../public/image/default_profile.png",
+    );
     const [logoutConfirmModal, setLogoutConfirmModal] = useState(false);
 
     const initLogout = async function () {
         try {
-            await axiosInstance.post(`/api/v1/users/logout`);
+            await axiosInstance.post(`/users/logout`);
         } catch (error) {
             console.log(error.message);
         } finally {
@@ -35,12 +39,20 @@ function ProfileOptions() {
         }
     };
 
+    useEffect(() => {
+        if (userData?.profileImg?.imgUrl) {
+            setProfileImgUrl(userData?.profileImg?.imgUrl);
+        } else {
+            setProfileImgUrl("/image/default_profile.png");
+        }
+    }, [userData]);
+
     return (
         <>
             <DropdownMenu>
                 <DropdownMenuTrigger>
                     <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarImage src={profileImgUrl} />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                 </DropdownMenuTrigger>

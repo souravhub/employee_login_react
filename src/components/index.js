@@ -13,6 +13,8 @@ import { Card } from "./ui/card";
 import { Dialog } from "./ui/dialog";
 import EditProfile from "./EditProfile";
 import ImgEditBtn from "./ImgEditBtn";
+import UserReport from "./UserReport";
+import LoginLogoutInfo from "./LoginLogoutInfo";
 
 export {
     Header,
@@ -31,4 +33,6 @@ export {
     Dialog,
     EditProfile,
     ImgEditBtn,
+    UserReport,
+    LoginLogoutInfo,
 };

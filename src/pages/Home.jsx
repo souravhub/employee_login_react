@@ -1,10 +1,10 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { UserReport } from "@/components";
 
 function Home() {
     return (
         <div className="min-h-[calc(100vh-8.5rem)]">
-            <Button>Test it</Button>
+            <UserReport />
         </div>
     );
 }

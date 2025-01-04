@@ -29,10 +29,7 @@ function EditProfile({ onClose, ...props }) {
             jobProfile,
         };
         try {
-            const res = await axiosInstance.put(
-                `/api/v1/users/update-info`,
-                apiBody,
-            );
+            const res = await axiosInstance.put(`/users/update-info`, apiBody);
 
             const { refreshToken } = JSON.parse(
                 localStorage.getItem("empLogin:user"),
@@ -106,6 +103,7 @@ function EditProfile({ onClose, ...props }) {
                     invalid={errors.email}
                     invalidMsg={errors?.email?.message || ""}
                     className="mb-4"
+                    disabled
                     {...register("email", {
                         required: "Email is required",
                         pattern: {
@@ -129,6 +127,7 @@ function EditProfile({ onClose, ...props }) {
                         { text: "User", value: "user" },
                         { text: "Admin", value: "admin" },
                     ]}
+                    disabled
                     labelKey="text"
                     valueKey="value"
                     label="User Type"

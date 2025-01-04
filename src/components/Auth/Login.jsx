@@ -26,7 +26,7 @@ function Login() {
             password,
         };
 
-        const res = await axiosInstance.post(`/api/v1/users/login`, apiBody);
+        const res = await axiosInstance.post(`/users/login`, apiBody);
         const { accessToken, refreshToken, user } = res.data.data;
         const userData = {
             ...user,

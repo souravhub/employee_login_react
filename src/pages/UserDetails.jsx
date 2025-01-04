@@ -16,7 +16,7 @@ function UserDetails() {
     const fileInputRef = useRef(null);
     const [uploadedImgData, setUploadedImgData] = useState(null);
     const [profileImgUrl, setProfileImgUrl] = useState(
-        "../../public/image/default_profile.png",
+        "/image/default_profile.png",
     );
     const userData = useSelector((state) => state.auth.userData);
     const [imgUploading, setImgUploading] = useState(false);
@@ -34,18 +34,14 @@ function UserDetails() {
             formData.append("file", event.target.files[0]);
             if (uploadedImgData && uploadedImgData.cldPublicId) {
                 await axiosInstance.delete(
-                    `/api/v1/storage/delete?cldPublicId=${uploadedImgData.cldPublicId}&fileType=image`,
+                    `/storage/delete?cldPublicId=${uploadedImgData.cldPublicId}&fileType=image`,
                 );
             }
-            const res = await axiosInstance.post(
-                `/api/v1/storage/upload`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
+            const res = await axiosInstance.post(`/storage/upload`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
                 },
-            );
+            });
             setUploadedImgData(res.data.data);
         } catch (error) {
             console.log(error);
@@ -61,10 +57,10 @@ function UserDetails() {
             setImgUploading(true);
             if (userData.profileImg.cldPublicId) {
                 await axiosInstance.delete(
-                    `/api/v1/storage/delete?cldPublicId=${userData.profileImg.cldPublicId}&fileType=image`,
+                    `/storage/delete?cldPublicId=${userData.profileImg.cldPublicId}&fileType=image`,
                 );
             }
-            const res = await axiosInstance.put(`/api/v1/users/update-info`, {
+            const res = await axiosInstance.put(`/users/update-info`, {
                 profileImg: { cldPublicId, imgUrl: url },
             });
             const { refreshToken } = JSON.parse(
