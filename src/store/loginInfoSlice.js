@@ -12,7 +12,7 @@ const loginInfoSlice = createSlice({
         setTodayInfo: (state, action) => {
             state.todayInfo = action.payload;
         },
-        setAllInfo: (state) => {
+        setAllInfo: (state, action) => {
             state.allInfo = action.payload;
         },
     },

@@ -1,29 +1,35 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Button, Card } from "./index";
+import { Button, Card, ConfirmDialog } from "./index";
 import moment from "moment";
 import axiosInstance from "../axiosConfig.js";
 import { useSelector, useDispatch } from "react-redux";
 import { setTodayInfo } from "@/store/loginInfoSlice";
 import { Loader2 } from "lucide-react";
 
-function LoginLogoutInfo() {
+function LoginLogoutInfo({ onLoginLogout }) {
     const dispatch = useDispatch();
     const todayLoginData = useSelector((state) => state.loginInfo.todayInfo);
     const userData = useSelector((state) => state.auth.userData);
     const [loginSubmitting, setLoginSubmitting] = useState(false);
     const [logoutSubmitting, setLogoutSubmitting] = useState(false);
+    const [logoutConfirmModal, setLogoutConfirmModal] = useState(false);
 
     const submitLoginTime = async () => {
         setLoginSubmitting(true);
         try {
             const res = await axiosInstance.post(`/login-info/create`, {});
             dispatch(setTodayInfo(res.data.data));
+            onLoginLogout();
         } catch (error) {
             console.log(error.message);
         } finally {
             setLoginSubmitting(false);
         }
+    };
+
+    const initLogout = () => {
+        setLogoutConfirmModal(true);
     };
 
     const submitLogoutTime = async () => {
@@ -34,6 +40,8 @@ function LoginLogoutInfo() {
                 {},
             );
             dispatch(setTodayInfo(res.data.data));
+            setLogoutConfirmModal(false);
+            onLoginLogout();
         } catch (error) {
             console.log(error.message);
         } finally {
@@ -95,7 +103,7 @@ function LoginLogoutInfo() {
                             <Button
                                 size="sm"
                                 className="px-4 bg-red-500 hover:bg-red-600"
-                                onClick={submitLogoutTime}
+                                onClick={initLogout}
                             >
                                 {logoutSubmitting && (
                                     <Loader2 className="animate-spin" />
@@ -114,6 +122,11 @@ function LoginLogoutInfo() {
                     </span>
                 )}
             </div>
+            <ConfirmDialog
+                isOpen={logoutConfirmModal}
+                onCancel={() => setLogoutConfirmModal(false)}
+                onConfirm={submitLogoutTime}
+            />
         </Card>
     );
 }
