@@ -133,7 +133,7 @@ function EditProfile({ onClose, ...props }) {
                     label="User Type"
                     invalid={errors.userType}
                     invalidMsg={errors?.userType?.message || ""}
-                    className="mb-4"
+                    className="mb-4 w-full"
                     {...register("userType", {
                         required: "User type is required",
                     })}
@@ -149,7 +149,7 @@ function EditProfile({ onClose, ...props }) {
                     label="Job Profile"
                     invalid={errors.jobProfile}
                     invalidMsg={errors?.jobProfile?.message || ""}
-                    className="mb-4"
+                    className="mb-4 w-full"
                     {...register("jobProfile", {
                         required: "Job profile is required",
                     })}

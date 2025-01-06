@@ -19,10 +19,10 @@ function UserReport() {
     const dispatch = useDispatch();
     const userData = useSelector((state) => state.auth.userData);
     const allLoginInfo = useSelector((state) => state.loginInfo.allInfo);
-    const [userType, setUserType] = useState(0);
+    const [dateFilter, setDateFilter] = useState(0);
 
     const onDateFilterChange = async (value) => {
-        setUserType(value);
+        setDateFilter(value);
         const startDate = moment().subtract(value, "days").format("YYYY-MM-DD");
         const endDate = moment().format("YYYY-MM-DD");
         try {
@@ -30,15 +30,13 @@ function UserReport() {
                 `/login-info/user-login-docs?startDate=${startDate}&endDate=${endDate}&page=1&limit=30`,
             );
             dispatch(setAllInfo(res.data?.data?.list || []));
-            console.log(res.data.data, "res.data.data");
-            console.log(allLoginInfo, "allLoginInfo");
         } catch (error) {
             console.log(error);
         }
     };
 
     useEffect(() => {
-        onDateFilterChange(userType);
+        onDateFilterChange(dateFilter);
     }, []);
 
     return (
@@ -55,10 +53,10 @@ function UserReport() {
                         ]}
                         labelKey="text"
                         valueKey="value"
-                        value={userType}
+                        value={dateFilter}
                         className="w-40"
                         selectClassName="text-sm font-medium py-[6px]"
-                        onChange={onDateFilterChange}
+                        onSelect={onDateFilterChange}
                     />
                 </div>
                 <Table>

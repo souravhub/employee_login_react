@@ -15,6 +15,8 @@ import EditProfile from "./EditProfile";
 import ImgEditBtn from "./ImgEditBtn";
 import UserReport from "./UserReport";
 import LoginLogoutInfo from "./LoginLogoutInfo";
+import AdminReport from "./AdminReport";
+import DatePicker from "./DatePicker";
 
 export {
     Header,
@@ -35,4 +37,6 @@ export {
     ImgEditBtn,
     UserReport,
     LoginLogoutInfo,
+    AdminReport,
+    DatePicker,
 };

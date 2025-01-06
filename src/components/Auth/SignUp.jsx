@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 function SignUp() {
     const navigate = useNavigate();
+    const [userType, setUserType] = React.useState("user");
+    const [jobProfile, setJobProfile] = React.useState("user");
     const {
         register,
         handleSubmit,
@@ -107,9 +109,11 @@ function SignUp() {
                         labelKey="text"
                         valueKey="value"
                         label="User Type"
+                        value={userType}
+                        onSelect={(value) => setUserType(value)}
                         invalid={errors.userType}
                         invalidMsg={errors?.userType?.message || ""}
-                        className="mb-4"
+                        className="mb-4 w-full"
                         {...register("userType", {
                             required: "User type is required",
                         })}
@@ -123,9 +127,11 @@ function SignUp() {
                             "Project Manager",
                         ]}
                         label="Job Profile"
+                        value={jobProfile}
+                        onSelect={(value) => setJobProfile(value)}
                         invalid={errors.jobProfile}
                         invalidMsg={errors?.jobProfile?.message || ""}
-                        className="mb-4"
+                        className="mb-4 w-full"
                         {...register("jobProfile", {
                             required: "Job profile is required",
                         })}
