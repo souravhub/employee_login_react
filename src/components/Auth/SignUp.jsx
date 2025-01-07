@@ -41,7 +41,6 @@ function SignUp() {
         };
 
         const res = await axiosInstance.post(`/users/register`, apiBody);
-        console.log(res, "res");
         navigate("/login");
     };
     return (

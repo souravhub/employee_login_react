@@ -29,7 +29,9 @@ function UserReport() {
             const res = await axiosInstance.get(
                 `/login-info/user-login-docs?startDate=${startDate}&endDate=${endDate}&page=1&limit=30`,
             );
-            dispatch(setAllInfo(res.data?.data?.list || []));
+            dispatch(
+                setAllInfo({ data: res.data?.data?.list || [], key: "user" }),
+            );
         } catch (error) {
             console.log(error);
         }
@@ -77,14 +79,15 @@ function UserReport() {
                             </TableHead>
                         </TableRow>
                     </TableHeader>
-                    {!allLoginInfo.length && (
+                    {(!allLoginInfo["user"] ||
+                        !allLoginInfo["user"].length) && (
                         <TableCaption className="text-center mb-4 text-xl font-bold">
                             No Data Found
                         </TableCaption>
                     )}
-                    {allLoginInfo && (
+                    {allLoginInfo["user"] && (
                         <TableBody>
-                            {allLoginInfo.map((info) => (
+                            {allLoginInfo["user"].map((info) => (
                                 <TableRow
                                     key={info._id}
                                     className="hover:bg-muted/50"

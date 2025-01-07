@@ -17,6 +17,7 @@ import UserReport from "./UserReport";
 import LoginLogoutInfo from "./LoginLogoutInfo";
 import AdminReport from "./AdminReport";
 import DatePicker from "./DatePicker";
+import Combobox from "./Form Elements/Combobox";
 
 export {
     Header,
@@ -39,4 +40,5 @@ export {
     LoginLogoutInfo,
     AdminReport,
     DatePicker,
+    Combobox,
 };

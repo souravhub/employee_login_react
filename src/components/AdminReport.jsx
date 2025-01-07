@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, SelectInput, DatePicker } from ".";
+import { Card, SelectInput, DatePicker, Combobox } from ".";
 import moment from "moment";
 import axiosInstance from "../axiosConfig.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,17 +25,36 @@ function AdminReport() {
     const [curTab, setCutTab] = useState("date");
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const onDateFilterChange = (value) => {
+    const onSelectUser = async (value) => {
         setSelectedUser(value);
-        fetchLoginDataByDate();
+        fetchLoginDataByUser(value);
     };
 
-    const fetchLoginDataByDate = async () => {
+    const fetchLoginDataByUser = async (userId) => {
+        if (!userId) return;
         try {
+            dispatch(setAllInfo({ data: [], key: "user" }));
             const res = await axiosInstance.get(
-                `/login-info/all-users-login-docs?date=${moment(selectedDate).format("YYYY-MM-DD")}&page=1&limit=30`,
+                `/login-info/login-docs/${userId}?page=1&limit=30`,
             );
-            dispatch(setAllInfo(res.data?.data?.list || []));
+            dispatch(
+                setAllInfo({ data: res.data?.data?.list || [], key: "user" }),
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const fetchLoginDataByDate = async (date) => {
+        if (!date) return;
+        try {
+            dispatch(setAllInfo({ data: [], key: "date" }));
+            const res = await axiosInstance.get(
+                `/login-info/all-users-login-docs?date=${moment(date).format("YYYY-MM-DD")}&page=1&limit=30`,
+            );
+            dispatch(
+                setAllInfo({ data: res.data?.data?.list || [], key: "date" }),
+            );
         } catch (error) {
             console.log(error);
         }
@@ -52,11 +71,13 @@ function AdminReport() {
 
     const onSelectDate = (value) => {
         setSelectedDate(value);
+        fetchLoginDataByDate(value);
     };
 
     useEffect(() => {
-        fetchLoginDataByDate();
-    }, []);
+        if (curTab == "date") fetchLoginDataByDate(selectedDate);
+        else fetchLoginDataByUser(selectedUser);
+    }, [curTab]);
     useEffect(() => {
         fetchAllUsers();
     }, []);
@@ -88,14 +109,13 @@ function AdminReport() {
                     </TabsContent> */}
                 </Tabs>
                 {curTab === "user" && (
-                    <SelectInput
+                    <Combobox
+                        placeholder="Select User"
                         options={userList}
                         labelKey="name"
                         valueKey="_id"
-                        value={selectedUser}
-                        className="w-40"
-                        selectClassName="text-sm font-medium py-[6px]"
-                        onSelect={onDateFilterChange}
+                        selected={selectedUser}
+                        onSelectOption={onSelectUser}
                     />
                 )}
                 {curTab === "date" && (
@@ -117,14 +137,14 @@ function AdminReport() {
                         </TableHead>
                     </TableRow>
                 </TableHeader>
-                {!allLoginInfo.length && (
+                {(!allLoginInfo[curTab] || !allLoginInfo[curTab].length) && (
                     <TableCaption className="text-center mb-4 text-xl font-bold">
                         No Data Found
                     </TableCaption>
                 )}
-                {allLoginInfo && (
+                {allLoginInfo[curTab] && (
                     <TableBody>
-                        {allLoginInfo.map((info) => (
+                        {allLoginInfo[curTab].map((info) => (
                             <TableRow
                                 key={info._id}
                                 className="hover:bg-muted/50"

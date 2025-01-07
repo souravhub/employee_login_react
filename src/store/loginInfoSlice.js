@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     todayInfo: null,
-    allInfo: [],
+    allInfo: {},
 };
 
 const loginInfoSlice = createSlice({
@@ -13,7 +13,7 @@ const loginInfoSlice = createSlice({
             state.todayInfo = action.payload;
         },
         setAllInfo: (state, action) => {
-            state.allInfo = action.payload;
+            state.allInfo[action.payload.key] = action.payload.data;
         },
     },
 });
