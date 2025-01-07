@@ -71,11 +71,13 @@ function ProfileOptions() {
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
-            <ConfirmDialog
-                isOpen={logoutConfirmModal}
-                onCancel={() => setLogoutConfirmModal(false)}
-                onConfirm={initLogout}
-            />
+            {logoutConfirmModal && (
+                <ConfirmDialog
+                    isOpen={logoutConfirmModal}
+                    onCancel={() => setLogoutConfirmModal(false)}
+                    onConfirm={initLogout}
+                />
+            )}
         </>
     );
 }

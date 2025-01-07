@@ -1,9 +1,10 @@
 import React from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { buttonVariants, ProfileOptions } from "../index.js";
 
 export default function Header() {
+    const location = useLocation();
     const authStatus = useSelector((state) => state.auth.status);
 
     return (
@@ -16,16 +17,18 @@ export default function Header() {
                 />
             </Link>
             <div className="flex items-center">
-                {!authStatus && (
-                    <Link
-                        to="/login"
-                        className={buttonVariants({
-                            variant: "default",
-                        })}
-                    >
-                        Log in
-                    </Link>
-                )}
+                {!authStatus &&
+                    location.pathname !== "/login" &&
+                    location.pathname !== "/signup" && (
+                        <Link
+                            to="/login"
+                            className={buttonVariants({
+                                variant: "default",
+                            })}
+                        >
+                            Log in
+                        </Link>
+                    )}
                 {authStatus && <ProfileOptions />}
             </div>
         </header>

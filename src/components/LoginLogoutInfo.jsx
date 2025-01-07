@@ -63,71 +63,77 @@ function LoginLogoutInfo({ onLoginLogout }) {
         fetchTodayLoginInfo();
     }, []);
     return (
-        <Card className="my-4">
-            <div className="flex justify-between p-2">
-                <span className="text-3xl inline-block">
-                    Welcome!! {userData?.name.firstName || ""}
-                </span>
-                {!todayLoginData && (
-                    <div className="flex items-center gap-2">
-                        <span className="text-lg font-semibold">
-                            Please Submit
-                        </span>
-                        <Button
-                            size="sm"
-                            className="px-4 bg-green-500 hover:bg-green-600"
-                            onClick={submitLoginTime}
-                        >
-                            {loginSubmitting && (
-                                <Loader2 className="animate-spin" />
-                            )}
-                            Login
-                        </Button>
-                        <span className="text-lg font-semibold">Time</span>
-                    </div>
-                )}
-                {todayLoginData?.loginInfo?.time && (
-                    <span className="text-lg font-semibold">
-                        You logged in today at{" "}
-                        {moment(todayLoginData.loginInfo.time).format(
-                            "hh:mm A",
-                        )}
+        <>
+            <Card className="my-4">
+                <div className="flex justify-between items-center p-2">
+                    <span className="text-3xl inline-block">
+                        Welcome!! {userData?.name.firstName || ""}
                     </span>
-                )}
-                {todayLoginData?.loginInfo?.isDone &&
-                    !todayLoginData?.logoutInfo?.isDone && (
+                    {!todayLoginData && (
                         <div className="flex items-center gap-2">
                             <span className="text-lg font-semibold">
                                 Please Submit
                             </span>
                             <Button
                                 size="sm"
-                                className="px-4 bg-red-500 hover:bg-red-600"
-                                onClick={initLogout}
+                                className="px-4 bg-green-500 hover:bg-green-600"
+                                onClick={submitLoginTime}
                             >
-                                {logoutSubmitting && (
+                                {loginSubmitting && (
                                     <Loader2 className="animate-spin" />
                                 )}
-                                Logout
+                                Login
                             </Button>
                             <span className="text-lg font-semibold">Time</span>
                         </div>
                     )}
-                {todayLoginData?.logoutInfo?.time && (
-                    <span className="text-lg font-semibold">
-                        You logged out today at{" "}
-                        {moment(todayLoginData.logoutInfo.time).format(
-                            "hh:mm A",
+                    {todayLoginData?.loginInfo?.time && (
+                        <span className="text-lg font-semibold">
+                            You logged in today at{" "}
+                            {moment(todayLoginData.loginInfo.time).format(
+                                "hh:mm A",
+                            )}
+                        </span>
+                    )}
+                    {todayLoginData?.loginInfo?.isDone &&
+                        !todayLoginData?.logoutInfo?.isDone && (
+                            <div className="flex items-center gap-2">
+                                <span className="text-lg font-semibold">
+                                    Please Submit
+                                </span>
+                                <Button
+                                    size="sm"
+                                    className="px-4 bg-red-500 hover:bg-red-600"
+                                    onClick={initLogout}
+                                >
+                                    {logoutSubmitting && (
+                                        <Loader2 className="animate-spin" />
+                                    )}
+                                    Logout
+                                </Button>
+                                <span className="text-lg font-semibold">
+                                    Time
+                                </span>
+                            </div>
                         )}
-                    </span>
-                )}
-            </div>
-            <ConfirmDialog
-                isOpen={logoutConfirmModal}
-                onCancel={() => setLogoutConfirmModal(false)}
-                onConfirm={submitLogoutTime}
-            />
-        </Card>
+                    {todayLoginData?.logoutInfo?.time && (
+                        <span className="text-lg font-semibold">
+                            You logged out today at{" "}
+                            {moment(todayLoginData.logoutInfo.time).format(
+                                "hh:mm A",
+                            )}
+                        </span>
+                    )}
+                </div>
+            </Card>
+            {logoutConfirmModal && (
+                <ConfirmDialog
+                    isOpen={logoutConfirmModal}
+                    onCancel={() => setLogoutConfirmModal(false)}
+                    onConfirm={submitLogoutTime}
+                />
+            )}
+        </>
     );
 }
 

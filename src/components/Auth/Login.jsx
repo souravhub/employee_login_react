@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Input, Button } from "../index";
+import { Input, Button, Card } from "../index";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../axiosConfig.js";
 import { useNavigate, Link } from "react-router-dom";
@@ -39,61 +39,69 @@ function Login() {
     };
 
     return (
-        <>
-            <div className="w-1/2 m-auto my-4">
-                <form
-                    onSubmit={handleSubmit(submit)}
-                    className="flex flex-wrap"
-                >
-                    <Input
-                        type="text"
-                        label="Email or User Name"
-                        placeholder="Enter Your email address or user name"
-                        invalid={errors.email}
-                        invalidMsg={errors?.email?.message || ""}
-                        className="mb-4"
-                        {...register("email", {
-                            required: "Email or username is required",
-                        })}
-                    />
-                    <Input
-                        label="Password"
-                        type="password"
-                        placeholder="Enter Password"
-                        invalid={errors.password}
-                        invalidMsg={errors?.password?.message || ""}
-                        className="mb-4"
-                        {...register("password", {
-                            required: "Password is required",
-                            minLength: {
-                                value: 5,
-                                message:
-                                    "Password must be at least 6 characters",
-                            },
-                        })}
-                    />
-                    <Button
-                        type="submit"
-                        className="w-full"
-                        disabled={isSubmitting}
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-8.5rem)]">
+            <div className="w-2/5 my-4">
+                <p className="text-3xl font-semibold mb-6 text-center">
+                    Welcome to Sign In Page
+                </p>
+                <Card className="px-6 py-4">
+                    <form
+                        onSubmit={handleSubmit(submit)}
+                        className="flex flex-wrap"
                     >
-                        {isSubmitting ? (
-                            <Loader2 className="animate-spin" />
-                        ) : (
-                            "Sign In"
-                        )}
-                    </Button>
-                </form>
+                        <Input
+                            type="text"
+                            label="Email or User Name"
+                            placeholder="Enter Your email address or user name"
+                            invalid={errors.email}
+                            invalidMsg={errors?.email?.message || ""}
+                            className="mb-4"
+                            {...register("email", {
+                                required: "Email or username is required",
+                            })}
+                        />
+                        <Input
+                            label="Password"
+                            type="password"
+                            placeholder="Enter Password"
+                            invalid={errors.password}
+                            invalidMsg={errors?.password?.message || ""}
+                            className="mb-8"
+                            {...register("password", {
+                                required: "Password is required",
+                                minLength: {
+                                    value: 5,
+                                    message:
+                                        "Password must be at least 6 characters",
+                                },
+                            })}
+                        />
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? (
+                                <Loader2 className="animate-spin" />
+                            ) : (
+                                "Sign In"
+                            )}
+                        </Button>
+                    </form>
+                    <div className="text-right mt-2">
+                        <p>
+                            Don't have an account?{" "}
+                            <Link
+                                to="/signup"
+                                className=" text-blue-500 underline"
+                            >
+                                Go to Sign Up Page
+                            </Link>
+                        </p>
+                    </div>
+                </Card>
             </div>
-            <div className="flex h-64 items-center">
-                <Link
-                    to="/signup"
-                    className="bg-blue-700 p-2 text-yellow-300 rounded-md"
-                >
-                    Go to Sign Up Page
-                </Link>
-            </div>
-        </>
+        </div>
     );
 }
 
